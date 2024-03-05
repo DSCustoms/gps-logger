@@ -87,10 +87,7 @@ If you have any questions or encounter any issues, feel free to open an issue on
 
 
 ## Manual Installation
-If you want to manually install it, install all the dependencies and use the code found in 'app.py', 'gps_logger.py' and 'index.html'
-
-
-GPS_TPV_test.py is a script that will test the gps output of your device once everything is set up
+If you want to manually install it, install all the dependencies and use the scripts from here. 
 
 GPS_Heart.py is a script that will draw a giant heart on the map output. Run this once and go view the web page. Fully customizable. 
 
