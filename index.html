@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>GPS Logger</title>
+    <style>
+        #map {
+            height: 1000px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <select id="tripSelect" onchange="loadTrip()">
+        <!-- Trip options will be added here by JavaScript -->
+    </select>
+    <div id="map"></div>
+    <script>
+        var logs = {{ logs|tojson|safe }};
+        var map;
+        var tripSelect = document.getElementById('tripSelect');
+        var tripPath;  // Declare tripPath outside the function
+
+        function formatFilename(filename) {
+            var year = filename.substring(0, 4);
+            var month = filename.substring(4, 6);
+            var day = filename.substring(6, 8);
+            var hour = filename.substring(8, 10);
+            var minute = filename.substring(10, 12);
+            var second = filename.substring(12, 14);
+
+            var date = new Date(year, month - 1, day, hour, minute, second);
+            return date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true }) + ', ' + (month + '/' + day + '/' + year);
+        }
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 8,
+                center: {lat: 28.608116, lng: -80.604117}
+            });
+
+            // Add trip options to the select element
+            for (var file in logs) {
+                var option = document.createElement('option');
+                option.text = formatFilename(file);
+                option.value = file;  // Store the original filename in the option value
+                tripSelect.add(option);
+            }
+
+            console.log('log filenames:', Object.keys(logs)); // Added debugging statement
+
+            // Load the first trip
+            if (logs && logs[tripSelect.value]) {
+                loadTrip();
+            } else {
+                console.log('No logs for file:', tripSelect.value);
+            }
+        }
+
+        function loadTrip() {
+            var file = tripSelect.value;  // This will now be the original filename
+            console.log('selected filename:', file);
+            console.log('logs:', logs);
+            console.log('logs[file]:', logs[file]);
+            if (!logs || !logs[file]) {
+                console.log('No logs for file:', file);
+                return;
+            }
+            var log = logs[file];
+            var path = [];
+            for (var i = 0; i < log.length; i++) {
+                path.push({lat: parseFloat(log[i].lat), lng: parseFloat(log[i].lon)});
+            }
+
+            // Remove the old path from the map
+            if (tripPath) {
+                tripPath.setMap(null);
+            }
+
+            // Create a path on the map 
+            tripPath = new google.maps.Polyline({
+                path: path,
+                geodesic: true,
+                strokeColor: '#0000FF',
+                strokeOpacity: 1.0,
+                strokeWeight: 8
+            });
+            tripPath.setMap(map);
+
+            // Zoom the map to show the entire trip
+            var bounds = new google.maps.LatLngBounds();
+            for (var i = 0; i < path.length; i++) {
+                bounds.extend(path[i]);
+            }
+            map.fitBounds(bounds);
+        }
+    </script>
+    <script async defer loading=async
+    src='https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap'>
+    </script>
+</body>
+</html>
