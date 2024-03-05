@@ -4,13 +4,23 @@
 sudo apt-get update
 sudo apt-get upgrade
 
-# Install the necessary packages
+# Install python3-pip
 sudo apt-get install -y python3-pip
+
+# Install python3-gps
 sudo apt-get install -y python3-gps
+
+# Install Flask using pip
 pip install flask
+
+# Install gpsd and gpsd-clients
 sudo apt-get install -y gpsd
 sudo apt-get install -y gpsd-clients
+
+# Install gpsbabel
 sudo apt-get install -y gpsbabel
+
+# Fix missing packages
 sudo apt-get update --fix-missing
 
 # Configure gpsd
