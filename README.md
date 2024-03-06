@@ -30,7 +30,7 @@ Installation
    ./install.sh
    ```
 
-   This will install all necessary dependencies, download the scripts from the GitHub repository, configure gpsd, create the necessary directories, set up the rc.local file, create the systemd services, and finally reboot the system.
+   This will install all necessary dependencies, download the scripts from the GitHub repository, configure gpsd, create the necessary directories, set up the rc.local file, create the systemd services, and finally reboot the system. Takes about 15 minutes. 
 
 Configuration
 After installation, you need to add your Google Maps API key to the index.html file:
