@@ -15,7 +15,7 @@ Installation
 1. Download the install.sh script from the GPS LoggerX GitHub repository:
 
    ```
-   wget https://github.com/DSCustoms/gps-logger/blob/main/install.sh
+   wget https://raw.githubusercontent.com/DSCustoms/gps-logger/main/install.sh
    ```
 
 2. Make the script executable by running:
