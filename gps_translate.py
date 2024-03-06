@@ -19,7 +19,7 @@ def run_gpsbabel():
             output_file = f'{boot_time}_{latest_file.replace(".nmea", ".kml")}'
             
             # Run gpsbabel on the latest file
-            subprocess.run(['gpsbabel', '-i', 'nmea', '-f', os.path.join('/home/pi/gps_data/', latest_file), '-o', 'kml>
+            subprocess.run(['gpsbabel', '-i', 'nmea', '-f', os.path.join('/home/pi/gps_data/', latest_file), '-o', 'kml', '-F', os.path.join('/home/pi/trips/', output_file)])
         
         # Wait for 30 seconds before the next run
         time.sleep(30)
